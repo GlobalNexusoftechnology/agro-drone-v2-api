@@ -384,10 +384,10 @@ export interface ApiCropCrop extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    cropName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::crop.crop'> &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -398,6 +398,7 @@ export interface ApiCropCrop extends Struct.CollectionTypeSchema {
 export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
   collectionName: 'customers';
   info: {
+    description: '';
     displayName: 'Customer';
     pluralName: 'customers';
     singularName: 'customer';
@@ -406,31 +407,34 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    area: Schema.Attribute.String;
-    bookingDate: Schema.Attribute.Date;
+    area: Schema.Attribute.String & Schema.Attribute.Required;
+    booking_date: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    customerStatus: Schema.Attribute.Enumeration<['active', 'inactive']>;
-    fullName: Schema.Attribute.String;
+    customer_status: Schema.Attribute.Enumeration<['active', 'inactive']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'active'>;
+    full_name: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::customer.customer'
     > &
       Schema.Attribute.Private;
-    mobileNo: Schema.Attribute.BigInteger;
+    mobile_no: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    village: Schema.Attribute.String;
+    village: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface ApiExpenseExpense extends Struct.CollectionTypeSchema {
   collectionName: 'expenses';
   info: {
+    description: '';
     displayName: 'Expense';
     pluralName: 'expenses';
     singularName: 'expense';
@@ -442,17 +446,118 @@ export interface ApiExpenseExpense extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    expenseName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::expense.expense'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPaymentTypePaymentType extends Struct.CollectionTypeSchema {
+  collectionName: 'payment_types';
+  info: {
+    displayName: 'Payment_Type';
+    pluralName: 'payment-types';
+    singularName: 'payment-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::payment-type.payment-type'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiReportReport extends Struct.CollectionTypeSchema {
+  collectionName: 'reports';
+  info: {
+    description: '';
+    displayName: 'Report';
+    pluralName: 'reports';
+    singularName: 'report';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    area: Schema.Attribute.Enumeration<['Acr', 'Guntha']> &
+      Schema.Attribute.Required;
+    balance_amount: Schema.Attribute.BigInteger &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        admin: {
+          readOnly: true;
+        };
+      }>;
+    booking_date: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    cash_amount: Schema.Attribute.BigInteger;
+    corporator_name: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    crop_name: Schema.Attribute.Relation<'oneToOne', 'api::crop.crop'>;
+    customer: Schema.Attribute.Relation<'oneToOne', 'api::customer.customer'>;
+    drone_cost: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    drone_name: Schema.Attribute.String & Schema.Attribute.Required;
+    fertilizer_sparing_date: Schema.Attribute.BigInteger &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::report.report'
+    > &
+      Schema.Attribute.Private;
+    mobile_no: Schema.Attribute.Relation<'oneToOne', 'api::crop.crop'> &
+      Schema.Attribute.SetPluginOptions<{
+        admin: {
+          readOnly: true;
+        };
+      }>;
+    online_amount: Schema.Attribute.BigInteger;
+    paid_amount: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    paid_date: Schema.Attribute.BigInteger;
+    payment_status: Schema.Attribute.Enumeration<['Paid', 'Unpaid']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        admin: {
+          readOnly: true;
+        };
+      }>;
+    payment_type: Schema.Attribute.Enumeration<
+      ['Cash', 'Google Pay', 'Phone Pay', 'IMPS Transfer', 'Bank Transfer']
+    > &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
+    remark: Schema.Attribute.String & Schema.Attribute.Required;
+    token: Schema.Attribute.String & Schema.Attribute.Required;
+    tonic_cost: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    tonic_name: Schema.Attribute.String & Schema.Attribute.Required;
+    total_amount: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    village: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -968,6 +1073,8 @@ declare module '@strapi/strapi' {
       'api::crop.crop': ApiCropCrop;
       'api::customer.customer': ApiCustomerCustomer;
       'api::expense.expense': ApiExpenseExpense;
+      'api::payment-type.payment-type': ApiPaymentTypePaymentType;
+      'api::report.report': ApiReportReport;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

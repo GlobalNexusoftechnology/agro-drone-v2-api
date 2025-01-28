@@ -1,0 +1,138 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "singularName": "report",
+    "pluralName": "reports",
+    "displayName": "Report",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "token": {
+      "type": "string",
+      "required": true
+    },
+    "corporator_name": {
+      "type": "string",
+      "required": true
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::customer.customer"
+    },
+    "mobile_no": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::crop.crop",
+      "pluginOptions": {
+        "admin": {
+          "readOnly": true
+        }
+      }
+    },
+    "village": {
+      "type": "string",
+      "required": true
+    },
+    "crop_name": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::crop.crop"
+    },
+    "area": {
+      "type": "enumeration",
+      "enum": [
+        "Acr",
+        "Guntha"
+      ],
+      "required": true
+    },
+    "quantity": {
+      "type": "integer",
+      "required": true
+    },
+    "payment_type": {
+      "type": "enumeration",
+      "enum": [
+        "Cash",
+        "Google Pay",
+        "Phone Pay",
+        "IMPS Transfer",
+        "Bank Transfer"
+      ],
+      "required": true
+    },
+    "total_amount": {
+      "type": "biginteger",
+      "required": true
+    },
+    "paid_amount": {
+      "type": "biginteger",
+      "required": true
+    },
+    "balance_amount": {
+      "type": "biginteger",
+      "pluginOptions": {
+        "admin": {
+          "readOnly": true
+        }
+      },
+      "required": true
+    },
+    "payment_status": {
+      "type": "enumeration",
+      "enum": [
+        "Paid",
+        "Unpaid"
+      ],
+      "pluginOptions": {
+        "admin": {
+          "readOnly": true
+        }
+      },
+      "required": true
+    },
+    "remark": {
+      "type": "string",
+      "required": true
+    },
+    "booking_date": {
+      "type": "biginteger",
+      "required": true
+    },
+    "fertilizer_sparing_date": {
+      "type": "biginteger",
+      "required": true
+    },
+    "cash_amount": {
+      "type": "biginteger"
+    },
+    "online_amount": {
+      "type": "biginteger"
+    },
+    "paid_date": {
+      "type": "biginteger"
+    },
+    "tonic_name": {
+      "type": "string",
+      "required": true
+    },
+    "tonic_cost": {
+      "type": "biginteger",
+      "required": true
+    },
+    "drone_name": {
+      "type": "string",
+      "required": true
+    },
+    "drone_cost": {
+      "type": "biginteger",
+      "required": true
+    }
+  }
+}

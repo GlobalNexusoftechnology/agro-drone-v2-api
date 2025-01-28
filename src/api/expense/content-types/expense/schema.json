@@ -4,15 +4,17 @@
   "info": {
     "singularName": "expense",
     "pluralName": "expenses",
-    "displayName": "Expense"
+    "displayName": "Expense",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "expenseName": {
-      "type": "string"
+    "name": {
+      "type": "string",
+      "required": true
     }
   }
 }

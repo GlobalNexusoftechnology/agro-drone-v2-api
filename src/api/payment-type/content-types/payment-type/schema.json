@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "crops",
+  "collectionName": "payment_types",
   "info": {
-    "singularName": "crop",
-    "pluralName": "crops",
-    "displayName": "Crop",
-    "description": ""
+    "singularName": "payment-type",
+    "pluralName": "payment-types",
+    "displayName": "Payment_Type"
   },
   "options": {
     "draftAndPublish": true
