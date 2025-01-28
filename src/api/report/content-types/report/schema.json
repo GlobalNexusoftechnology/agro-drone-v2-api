@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -20,29 +20,9 @@
       "type": "string",
       "required": true
     },
-    "customer": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::customer.customer"
-    },
-    "mobile_no": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::crop.crop",
-      "pluginOptions": {
-        "admin": {
-          "readOnly": true
-        }
-      }
-    },
     "village": {
       "type": "string",
       "required": true
-    },
-    "crop_name": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::crop.crop"
     },
     "area": {
       "type": "enumeration",
@@ -68,35 +48,21 @@
       "required": true
     },
     "total_amount": {
-      "type": "biginteger",
+      "type": "decimal",
       "required": true
     },
     "paid_amount": {
-      "type": "biginteger",
+      "type": "decimal",
       "required": true
     },
     "balance_amount": {
-      "type": "biginteger",
-      "pluginOptions": {
-        "admin": {
-          "readOnly": true
-        }
-      },
+      "type": "decimal",
       "required": true
     },
     "payment_status": {
-      "type": "enumeration",
-      "enum": [
-        "Paid",
-        "Unpaid"
-      ],
-      "pluginOptions": {
-        "admin": {
-          "readOnly": true
-        }
-      },
+      "type": "string",
       "required": true
-    },
+    },  
     "remark": {
       "type": "string",
       "required": true
@@ -132,6 +98,18 @@
     },
     "drone_cost": {
       "type": "biginteger",
+      "required": true
+    },
+    "farmer_name": {
+      "type": "string",
+      "required": true
+    },
+    "mobile_no": {
+      "type": "biginteger",
+      "required": true
+    },
+    "crop_name": {
+      "type": "string",
       "required": true
     }
   }

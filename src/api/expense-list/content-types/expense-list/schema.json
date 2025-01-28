@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "expense_lists",
+  "info": {
+    "singularName": "expense-list",
+    "pluralName": "expense-lists",
+    "displayName": "Expense_List",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "token": {
+      "type": "biginteger",
+      "required": true
+    },
+    "date": {
+      "type": "biginteger",
+      "required": true
+    },
+    "expense_head": {
+      "type": "string",
+      "required": true
+    },
+    "amount": {
+      "type": "biginteger",
+      "required": true
+    },
+    "remark": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

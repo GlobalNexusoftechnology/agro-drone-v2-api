@@ -378,7 +378,7 @@ export interface ApiCropCrop extends Struct.CollectionTypeSchema {
     singularName: 'crop';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -404,7 +404,7 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
     singularName: 'customer';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     area: Schema.Attribute.String & Schema.Attribute.Required;
@@ -431,6 +431,39 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiExpenseListExpenseList extends Struct.CollectionTypeSchema {
+  collectionName: 'expense_lists';
+  info: {
+    description: '';
+    displayName: 'Expense_List';
+    pluralName: 'expense-lists';
+    singularName: 'expense-list';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    expense_head: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::expense-list.expense-list'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    remark: Schema.Attribute.Text & Schema.Attribute.Required;
+    token: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiExpenseExpense extends Struct.CollectionTypeSchema {
   collectionName: 'expenses';
   info: {
@@ -440,7 +473,7 @@ export interface ApiExpenseExpense extends Struct.CollectionTypeSchema {
     singularName: 'expense';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -463,12 +496,13 @@ export interface ApiExpenseExpense extends Struct.CollectionTypeSchema {
 export interface ApiPaymentTypePaymentType extends Struct.CollectionTypeSchema {
   collectionName: 'payment_types';
   info: {
+    description: '';
     displayName: 'Payment_Type';
     pluralName: 'payment-types';
     singularName: 'payment-type';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -497,28 +531,22 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
     singularName: 'report';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     area: Schema.Attribute.Enumeration<['Acr', 'Guntha']> &
       Schema.Attribute.Required;
-    balance_amount: Schema.Attribute.BigInteger &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        admin: {
-          readOnly: true;
-        };
-      }>;
+    balance_amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
     booking_date: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     cash_amount: Schema.Attribute.BigInteger;
     corporator_name: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    crop_name: Schema.Attribute.Relation<'oneToOne', 'api::crop.crop'>;
-    customer: Schema.Attribute.Relation<'oneToOne', 'api::customer.customer'>;
+    crop_name: Schema.Attribute.String & Schema.Attribute.Required;
     drone_cost: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     drone_name: Schema.Attribute.String & Schema.Attribute.Required;
+    farmer_name: Schema.Attribute.String & Schema.Attribute.Required;
     fertilizer_sparing_date: Schema.Attribute.BigInteger &
       Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -527,22 +555,11 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
       'api::report.report'
     > &
       Schema.Attribute.Private;
-    mobile_no: Schema.Attribute.Relation<'oneToOne', 'api::crop.crop'> &
-      Schema.Attribute.SetPluginOptions<{
-        admin: {
-          readOnly: true;
-        };
-      }>;
+    mobile_no: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     online_amount: Schema.Attribute.BigInteger;
-    paid_amount: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    paid_amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
     paid_date: Schema.Attribute.BigInteger;
-    payment_status: Schema.Attribute.Enumeration<['Paid', 'Unpaid']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        admin: {
-          readOnly: true;
-        };
-      }>;
+    payment_status: Schema.Attribute.String & Schema.Attribute.Required;
     payment_type: Schema.Attribute.Enumeration<
       ['Cash', 'Google Pay', 'Phone Pay', 'IMPS Transfer', 'Bank Transfer']
     > &
@@ -553,7 +570,7 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
     token: Schema.Attribute.String & Schema.Attribute.Required;
     tonic_cost: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     tonic_name: Schema.Attribute.String & Schema.Attribute.Required;
-    total_amount: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    total_amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1072,6 +1089,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::crop.crop': ApiCropCrop;
       'api::customer.customer': ApiCustomerCustomer;
+      'api::expense-list.expense-list': ApiExpenseListExpenseList;
       'api::expense.expense': ApiExpenseExpense;
       'api::payment-type.payment-type': ApiPaymentTypePaymentType;
       'api::report.report': ApiReportReport;

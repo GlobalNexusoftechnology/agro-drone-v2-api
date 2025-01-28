@@ -4,10 +4,11 @@
   "info": {
     "singularName": "payment-type",
     "pluralName": "payment-types",
-    "displayName": "Payment_Type"
+    "displayName": "Payment_Type",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
